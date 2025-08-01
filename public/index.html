@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Complaint Portal</title>
+</head>
+<body>
+  <h1>Register Complaint</h1>
+
+  <form id="complaintForm">
+    <label>Summary: <input type="text" name="summary" required></label><br>
+    <label>Full Text: <textarea name="full_text" required></textarea></label><br>
+    <label>Category: <input type="text" name="category" required></label><br>
+    <label>Priority:
+      <select name="priority">
+        <option>High</option>
+        <option>Medium</option>
+        <option>Low</option>
+      </select>
+    </label><br>
+    <label>Group ID: <input type="number" name="group_id" required></label><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById("complaintForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const res = await fetch("/api/registerComplaint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      alert(result.message);
+    });
+  </script>
+
+  <!-- Omnidim voice agent -->
+  <script id="omnidimension-web-widget" async src="https://backend.omnidim.io/web_widget.js?secret_key=1eb03deb8bcb130127c84c5dacbb3542"></script>
+</body>
+</html>
